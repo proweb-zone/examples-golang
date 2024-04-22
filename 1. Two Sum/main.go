@@ -1,38 +1,29 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main(){
-	nums := []int{3,2,4}
+	nums := []int{3,3,4}
 	target := 6
-	result := []int{}
 
-	result = twoSum(nums, target)
-
-for _,item := range result {
-	fmt.Println(item)
-}
-
+	twoSum(nums, target)
 }
 
 func twoSum(nums []int, target int) []int {
-	twoSum := []int{}
+	reBuildNums := map[int]int{}
+	result := []int{}
 
-	for index:= range nums {
-		for subIndex:= range nums {
-			if index != subIndex && nums[index]+nums[subIndex] == target {
-				twoSum = append(twoSum, index)
-				twoSum = append(twoSum, subIndex)
-				break
-			}
-		}
+	for i, num:= range nums {
+		reBuildNums[num] = i
+	}
 
-		if len(twoSum) >= 2 {
+	for i, num:= range nums {
+		compareIndex, ok := reBuildNums[target - num]
+
+		if ok && i != compareIndex {
+			result = append(result, i)
+			result = append(result, compareIndex)
 			break
 		}
 	}
 
-	return twoSum
+	return result
 }
